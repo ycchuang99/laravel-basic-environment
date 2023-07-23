@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -23,8 +25,12 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (NotFoundHttpException $exception) {
+            return response()->json(['messages' => $exception->getMessage()], $exception->getStatusCode());
+        });
+
+        $this->renderable(function (Exception $exception) {
+            return response()->json(['messages' => 'Unknow error'], 500);
         });
     }
 }
