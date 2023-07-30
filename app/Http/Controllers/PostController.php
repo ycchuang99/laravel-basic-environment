@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Http;
+use Log;
 
 class PostController extends Controller
 {
@@ -17,6 +19,12 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        Log::info('Opentelemetry Test', ['id' => 1]);
+
+        $response = Http::get('http://192.168.0.18:8001/api/v1/posts');
+
+        Log::info('HTTP REQUEST SUCCESS');
+
         return $this->post->with('user')->paginate($request->input('perPage'));
     }
 

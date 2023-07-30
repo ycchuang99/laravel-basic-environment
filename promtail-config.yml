@@ -1,0 +1,16 @@
+server:
+  http_listen_port: 0
+  grpc_listen_port: 0
+
+clients:
+  - url: https://409138:glc_eyJvIjoiODE0MDI5IiwibiI6InN0YWNrLTU1OTc0Mi1obC13cml0ZS1sb2tpLWdyYWZhbmEiLCJrIjoiWk9XNzc1RVgyNThJc0R1S2YwSEg4OTVFIiwibSI6eyJyIjoiYXUifX0=@logs-prod-004.grafana.net/loki/api/v1/push
+
+scrape_configs:
+- job_name: system
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: varlogs
+      __path__: /var/log/*.log
+      service_name: laravel-basic

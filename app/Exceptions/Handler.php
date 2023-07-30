@@ -29,8 +29,9 @@ class Handler extends ExceptionHandler
             return response()->json(['messages' => $exception->getMessage()], $exception->getStatusCode());
         });
 
-        $this->renderable(function (Exception $exception) {
-            return response()->json(['messages' => 'Unknow error'], 500);
-        });
+        // $this->renderable(function (Exception $exception) {
+        //     dd($exception);
+        //     return response()->json(['messages' => 'Unknow error'], 500);
+        // });
     }
 }

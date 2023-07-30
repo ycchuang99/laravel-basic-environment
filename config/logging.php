@@ -1,5 +1,6 @@
 <?php
 
+use App\Log\OpenTelemetryLogProcessor;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -54,7 +55,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'opentelemetry'],
             'ignore_exceptions' => false,
         ],
 
@@ -126,6 +127,26 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'opentelemetry' => [
+            'driver' => 'monolog',
+            'level' => env('LOG_LEVEL', 'debug'),
+            'handler' => StreamHandler::class,
+            'formatter' => env('LOG_STDERR_FORMATTER'),
+            'with' => [
+                'stream' => 'php://stderr',
+            ],
+            'processors' => [OpenTelemetryLogProcessor::class],
+        ],
+
+        // 'opentelemetry' => [
+        //     'driver' => 'monolog',
+        //     'level' => env('LOG_LEVEL', 'debug'),
+        //     'handler' => new \OpenTelemetry\Contrib\Logs\Monolog\Handler(
+        //         $loggerProvider,
+        //         \Psr\Log\LogLevel::ERROR,
+        //     ),
+        // ]
     ],
 
 ];

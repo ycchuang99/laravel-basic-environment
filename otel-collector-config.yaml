@@ -1,0 +1,38 @@
+receivers:
+  zipkin:
+    endpoint: 0.0.0.0:9411
+    parse_string_tags: false
+  otlp:
+    protocols:
+      grpc:
+      http:
+  prometheus:
+    config:
+      scrape_configs:
+      - job_name: 'otel-collector'
+        scrape_interval: 10s
+        static_configs:
+        - targets: ['192.168.0.18:8888']
+
+processors:
+  batch:
+
+exporters:
+  otlp:
+    endpoint: tempo-prod-03-au-southeast-0.grafana.net:443
+    headers:
+      authorization: Basic NDA1NjUxOmdsY19leUp2SWpvaU9ERTBNREk1SWl3aWJpSTZJbk4wWVdOckxUVTFPVGMwTWkxb2RDMTBaVzF3YnkxMGIydGxiaTB4SWl3aWF5STZJbXRpT0hSM2JITXlOMDQyTVRkRFJsUTFOazB4Tm5sTlV5SXNJbTBpT25zaWNpSTZJbUYxSW4xOQ==
+  prometheus:
+    endpoint: 0.0.0.0:8889
+    namespace: default
+
+service:
+  pipelines:
+    traces:
+      receivers: [zipkin]
+      processors: [batch]
+      exporters: [otlp]
+    metrics:
+      receivers: [prometheus, otlp]
+      processors: [batch]
+      exporters: [prometheus]

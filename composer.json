@@ -1,5 +1,5 @@
 {
-    "name": "laravel/laravel",
+    "name": "evan/laravel-basic",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": [
@@ -12,7 +12,14 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "open-telemetry/opentelemetry": "^1.0@beta",
+        "open-telemetry/opentelemetry-auto-laravel": "^0.0.9",
+        "open-telemetry/opentelemetry-auto-psr15": "^1.0@beta",
+        "open-telemetry/opentelemetry-auto-psr18": "^1.0@beta",
+        "open-telemetry/opentelemetry-logger-monolog": "^0.0.3",
+        "open-telemetry/sdk": "^1.0@beta",
+        "php-http/httplug": "^2.4"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
@@ -71,9 +78,9 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": false
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "beta",
     "prefer-stable": true
 }
